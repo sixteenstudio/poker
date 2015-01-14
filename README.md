@@ -1,4 +1,6 @@
 poker
 =====
 
-A PHP Poker application built using the Laravel framework to demonstrate the Socketier library
+A PHP-based Poker library capable of hand calculations, texas holdem game logic and more
+
+Documenation coming soon...

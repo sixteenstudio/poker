@@ -1,0 +1,27 @@
+{
+	"name": "sixteenstudio/poker",
+	"description": "A PHP-based poker libary, with hand strength calculations, texas holdem game logic and more.",
+	"keywords": [
+		"php",
+		"poker",
+	],
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Matthew Collison",
+			"email": "matthew@sixteenstudio.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Sixteenstudio\\Poker\\": "src/"
+		}
+	},
+	"minimum-stability": "dev"
+}
