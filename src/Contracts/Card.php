@@ -1,4 +1,4 @@
-<?php namespace Poker\Table\Contracts;
+<?php namespace Sixteenstudio\Poker\Contracts;
 
 interface Card {
 

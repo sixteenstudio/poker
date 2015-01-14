@@ -1,4 +1,4 @@
-<?php namespace Poker\Table;
+<?php namespace Sixteenstudio\Poker;
 
 /****
  * NOTE TO SELF:
