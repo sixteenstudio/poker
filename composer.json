@@ -3,7 +3,7 @@
 	"description": "A PHP-based poker libary, with hand strength calculations, texas holdem game logic and more.",
 	"keywords": [
 		"php",
-		"poker",
+		"poker"
 	],
 	"license": "BSD-3-Clause",
 	"authors": [
