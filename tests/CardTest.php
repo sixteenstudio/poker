@@ -13,7 +13,7 @@ namespace Sixteenstudio\Poker;
 
 class CardTest extends \PHPUnit_Framework_TestCase {
 
-	/**
+    /**
      * @covers            \Sixteenstudio\Poker\Card::setValue
      * @covers            \Sixteenstudio\Poker\Card::setSuit
      * @covers            \Sixteenstudio\Poker\Card::getValue
