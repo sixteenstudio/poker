@@ -67,23 +67,27 @@ class Card implements Contracts\Card {
 		if ( ! $this->isValidValue($value)) {
 			throw new InvalidCardPropertyException("An invalid value was set for a card: $value");
 		}
+
+		$this->value = $value;
 	}
 
 	public function setSuit($suit)
 	{
-		if ( ! $this->isValidSuit($value)) {
+		if ( ! $this->isValidSuit($suit)) {
 			throw new InvalidCardPropertyException("An invalid suit was set for a card: $suit");
 		}
+
+		$this->suit = $suit;
 	}
 
-	protected function isValidValue()
+	protected function isValidValue($value)
 	{
 		return array_key_exists($value, $this->cardValues);
 	}
 
-	protected function isValidSuit()
+	protected function isValidSuit($suit)
 	{
-		return in_array($value, $this->cardSuits);
+		return in_array($suit, $this->cardSuits);
 	}
 
 }
