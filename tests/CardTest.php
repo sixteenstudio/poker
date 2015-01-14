@@ -33,6 +33,24 @@ class CardTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers            \Sixteenstudio\Poker\Card::setValue
+     * @covers            \Sixteenstudio\Poker\Card::setSuit
+     * @covers            \Sixteenstudio\Poker\Card::getValue
+     * @covers            \Sixteenstudio\Poker\Card::getDescription
+     * @covers            \Sixteenstudio\Poker\Card::getSuit
+     * @covers            \Sixteenstudio\Poker\Card::isValidValue
+     * @covers            \Sixteenstudio\Poker\Card::isValidSuit
+     */
+    public function testReturnsLegibleEnglishDescription()
+    {
+        $card = new Card();
+        $card->setValue(1);
+        $card->setSuit('Spade');
+
+        $this->assertEquals($card->getDescription(), 'Ace of Spades');
+    }
+
+    /**
+     * @covers            \Sixteenstudio\Poker\Card::setValue
      * @covers            \Sixteenstudio\Poker\Card::isValidValue
      * @expectedException \Sixteenstudio\Poker\InvalidCardPropertyException
      */

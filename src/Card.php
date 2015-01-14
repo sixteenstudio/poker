@@ -49,7 +49,7 @@ class Card implements Contracts\Card {
 	 */
 	public function getDescription()
 	{
-		return $this->cardValues[$this->getValue()] . ' of ' . $this->cardSuits[$this->getSuit()];
+		return $this->cardValues[$this->getValue()] . ' of ' . $this->getSuit() . 's';
 	}
 
 	public function getValue()
