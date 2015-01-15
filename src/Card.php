@@ -42,6 +42,17 @@ class Card implements Contracts\Card {
         'Heart'
     ];
 
+    public function __construct($suit = null, $value = null)
+    {
+        if ( ! is_null($suit)) {
+            $this->setSuit($suit);
+        }
+
+        if ( ! is_null($suit)) {
+            $this->setSuit($suit);
+        }
+    }
+
     /**
      * Returns a legible description of the card
      * suit and value

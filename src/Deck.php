@@ -1,7 +1,5 @@
 <?php namespace Sixteenstudio\Poker;
 
-use Collection;
-
 class Deck {
 
     /**
@@ -13,7 +11,7 @@ class Deck {
 
     public function __construct(array $cards = [])
     {
-        $this->cards = new Collection($cards);
+        $this->setCards($cards);
     }
 
     public static function newMerged(array $decks)
@@ -48,7 +46,7 @@ class Deck {
     }
 
     /**
-     * Takes a card off the top of the pile
+     * Takes a card off the top of the deck
      * 
      * @return Poker\Table\Contracts\Card
      */
@@ -58,13 +56,13 @@ class Deck {
     }
 
     /**
-     * Places a card into the deck
+     * Places a card at the top of the deck
      *
      * @return void
      */
     public function addCard(Contracts\Card $card)
     {
-        $this->cards->add($card);
+        $this->cards->prepend($card);
     }
 
     /**
