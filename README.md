@@ -47,3 +47,8 @@ The Game class, which is currently under development, is an abstract class which
 It will hold player information, game states and essentially the backend gameplay logic required to run a game server.
 
 An Laravel 4.2 based application built using Socketier, MongoDB and this Poker library will be available soon, which will be an example of how an online poker room solution can be achieved using PHP.
+
+Example
+-------
+
+The environment application will be found in the sixteenstudio/poker-environment repository. This provides a vagrant-based environment built on Laravel 4.2 to fully test out the features of the poker library and the texas hold'em functionality.
