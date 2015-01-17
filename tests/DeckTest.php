@@ -91,6 +91,22 @@ class DeckTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    /**
+     * @uses \Sixteenstudio\Poker\Card
+     * @uses \Sixteenstudio\Poker\Deck
+     */
+    public function testAllCardsPresentOnMergedDeck()
+    {
+        $deckOne = $this->getArrayOfCards1();
+        $deckTwo = $this->getArrayOfCards2();
+
+        $mergedDeck = Deck::newMerged([$deckOne, $deckTwo]);
+
+        foreach ($mergedDeck->getCards() as $card) {
+
+        }
+    }
+
     private function getArrayOfCards1()
     {
         return [
