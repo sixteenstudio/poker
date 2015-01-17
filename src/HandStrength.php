@@ -104,7 +104,7 @@ class HandStrength extends Deck {
     public function isStraightFlush()
     {
         // First sort the cards by value, ascending
-        $this->cards->sortBy(function($card)
+        $this->cards->sortByDesc(function($card)
         {
             return $card->getValue();
         });
@@ -115,7 +115,7 @@ class HandStrength extends Deck {
         $lastSuit = -1;
 
         foreach ($this->cards as $card) {
-            if ($card->getValue() == $lastValue + 1 && $card->getSuit() == $lastSuit) {
+            if ($card->getValue() == $lastValue - 1 && $card->getSuit() == $lastSuit) {
                 // Found a consecutive card that was the same
                 // suit as the last one, add one to the count
                 $consecutiveCount++;
@@ -209,7 +209,7 @@ class HandStrength extends Deck {
     {
 
         // First sort the cards by value, ascending
-        $this->cards->sortBy(function($card)
+        $this->cards->sortByDesc(function($card)
         {
             return $card->getValue();
         });
