@@ -8,6 +8,8 @@ Cards and Decks
 
 The poker library retains a fairly simplified class structure, providing you with a simple card class which can be swapped out for any card implementation that follows its interface, allowing you to implement your own suits and even your own description translations.
 
+    <?php
+    
     $cards = [
         new Card('Club', 1),
         new Card('Spade', 2),
@@ -22,6 +24,8 @@ A Deck is a collection of cards that provides shuffle, take card, card count fun
 
 A standard 52 card deck can be instantiated using the static newStandardDeck method
 
+    <?php
+    
     $52CardDeck = Deck::newStandardDeck();
 
 Hands and HandStrengths
@@ -29,6 +33,8 @@ Hands and HandStrengths
 
 Hands are made from a particular number of cards, of which the limit depends on the type of game. The default Hand class sets a limit of **2 cards**, as this is the standard Texas Hold'em hand card count.
 
+    <?php
+    
     $hand = new Hand([$deck->takeCard(), $deck->takeCard()]);
 
 If an invalid hand is made (i.e. more than 2 cards are added to the hand), an **Sixteenstudio\Poker\InvalidHandException** will be thrown.
