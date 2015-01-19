@@ -37,6 +37,22 @@ class DeckTest extends \PHPUnit_Framework_TestCase {
      * @uses              \Sixteenstudio\Poker\Card
      * @covers            \Sixteenstudio\Poker\Deck::__construct
      * @covers            \Sixteenstudio\Poker\Deck::setCards
+     */
+    public function testDeckIteratesAsArray()
+    {
+        $cards = $this->getArrayOfCards1();
+
+        $deck = new Deck($cards);
+
+        foreach ($deck as $key => $card) {
+            $this->assertEquals($card, $cards[$key]);
+        }
+    }
+
+    /**
+     * @uses              \Sixteenstudio\Poker\Card
+     * @covers            \Sixteenstudio\Poker\Deck::__construct
+     * @covers            \Sixteenstudio\Poker\Deck::setCards
      * @covers            \Sixteenstudio\Poker\Deck::takeCard
      * @covers            \Sixteenstudio\Poker\Deck::cardCount
      */
