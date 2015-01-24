@@ -18,6 +18,10 @@ class HandStrength extends Deck {
      */
     protected $hand;
 
+    /** @var Card */
+    protected $kicker;
+    protected $highEnd;
+
     protected $hands = [
         'High Card',
         'Pair',
@@ -55,44 +59,46 @@ class HandStrength extends Deck {
      */
     public function calculateHandStrength()
     {
-        if ($this->isRoyalFlush()) {
-            $this->hand = 9;
-        }
+        $this->sortCards();
 
-        if ($this->isStraightFlush()) {
-            $this->hand = 8;
-        }
-
-        if ($this->isFourOfAKind()) {
-            $this->hand = 7;
-        }
-
-        if ($this->isFullHouse()) {
-            $this->hand = 6;
-        }
-
-        if ($this->isFlush()) {
-            $this->hand = 5;
-        }
-
-        if ($this->isStraight()) {
-            $this->hand = 4;
-        }
-
-        if ($this->isThreeOfAKind()) {
-            $this->hand = 3;
-        }
-
-        if ($this->isTwoPair()) {
-            $this->hand = 2;
+        if ($this->isHighCard()) {
+            $this->hand = 0;
         }
 
         if ($this->isPair()) {
             $this->hand = 1;
         }
 
-        if ($this->isHighCard()) {
-            $this->hand = 0;
+        if ($this->isTwoPair()) {
+            $this->hand = 2;
+        }
+
+        if ($this->isThreeOfAKind()) {
+            $this->hand = 3;
+        }
+
+        if ($this->isStraight()) {
+            $this->hand = 4;
+        }
+
+        if ($this->isFlush()) {
+            $this->hand = 5;
+        }
+
+        if ($this->isFullHouse()) {
+            $this->hand = 6;
+        }
+
+        if ($this->isFourOfAKind()) {
+            $this->hand = 7;
+        }
+
+        if ($this->isStraightFlush()) {
+            $this->hand = 8;
+        }
+
+        if ($this->isRoyalFlush()) {
+            $this->hand = 9;
         }
     }
 
@@ -103,38 +109,7 @@ class HandStrength extends Deck {
 
     public function isStraightFlush()
     {
-        // First sort the cards by value, ascending
-        $this->cards->sortByDesc(function($card)
-        {
-            return $card->getValue();
-        });
-
-        $consecutiveCount = 1;
-
-        $lastValue = -1;
-        $lastSuit = -1;
-
-        foreach ($this->cards as $card) {
-            if ($card->getValue() == $lastValue - 1 && $card->getSuit() == $lastSuit) {
-                // Found a consecutive card that was the same
-                // suit as the last one, add one to the count
-                $consecutiveCount++;
-
-                // We've found a straight flush if we have counted
-                // five consecutive cards with the same suit
-                if ($consecutiveCount === 5) {
-                    return true;
-                }
-            } else {
-                // Lost consecutive streak, reset the count
-                $consecutiveCount = 1;
-            }
-
-            $lastValue = $card->getValue();
-            $lastSuit = $card->getSuit();
-        }
-
-        return false;
+        return $this->isStraight() && $this->isFlush();
     }
 
     public function isFourOfAKind()
@@ -176,7 +151,7 @@ class HandStrength extends Deck {
         }
 
         foreach ($suitTally as $tally) {
-            if ($tally === 5) {
+            if ($tally >= 5) {
                 return true;
             }
         }
@@ -205,21 +180,23 @@ class HandStrength extends Deck {
         return $highStraight ?: $lowStraight;
     }
 
-    protected function findStraight()
+    protected function sortCards()
     {
-
-        // First sort the cards by value, ascending
         $this->cards->sortByDesc(function($card)
         {
             return $card->getValue();
         });
+    }
 
+    protected function findStraight()
+    {
         $consecutiveCount = 1;
 
         $lastValue = -1;
+        $high = '';
 
         foreach ($this->cards as $card) {
-            if ($card->getValue() == $lastValue + 1) {
+            if ($card->getValue() == $lastValue - 1) {
                 // Found a consecutive card, add one to
                 // the count
                 $consecutiveCount++;
@@ -227,11 +204,13 @@ class HandStrength extends Deck {
                 // We've found a straight if we have counted
                 // five consecutive cards
                 if ($consecutiveCount === 5) {
+                    $this->highEnd = $high;
                     return true;
                 }
             } else {
                 // Lost consecutive streak, reset the count
                 $consecutiveCount = 1;
+                $high = clone $card;
             }
 
             $lastValue = $card->getValue();
@@ -252,11 +231,22 @@ class HandStrength extends Deck {
             empty($valueTally[$card->getValue()]) ? $valueTally[$card->getValue()] = 1 : $valueTally[$card->getValue()]++;
         }
 
-        foreach ($valueTally as $tally) {
+        foreach ($valueTally as $cardValue => $tally) {
             // Flip the aces back
             $this->flipAces();
 
             if ($tally === 3) {
+                $findHand = clone $this->cards;
+                foreach ($findHand as $idx => $card)
+                {
+                    if ($card->getValue == $cardValue)
+                    {
+                        $this->madeHand[] = $card;
+                        unset($findHand[$idx]);
+                    }
+                }
+                $this->madeHand[] = $card[0];
+                $this->madeHand[] = $card[1];
                 return true;
             }
         }
@@ -342,12 +332,45 @@ class HandStrength extends Deck {
      */
     public function isHighCard()
     {
+
         return true;
     }
 
     public function getDescription()
     {
-        return $this->getHandType() . ' ' . $this->getKicker() ' Kicker';
+        return $this->getHandType() . $this->getKickerDescription();
+    }
+
+    public function getHandType()
+    {
+        $this->calculateHandStrength();
+        return $this->hands[$this->hand];
+    }
+
+    public function getKicker()
+    {
+        return $this->kicker;
+    }
+
+    public function getKickerDescription()
+    {
+        if ($kicker = $this->getKicker())
+        {
+            return ' ' . $this->kicker . ' Kicker';
+        }
+
+        if ($high = $this->getHighEnd())
+        {
+            return ' ' . $high . ' High';
+        }
+    }
+
+    protected function getHighEnd()
+    {
+        if ($this->highEnd)
+        {
+            return $this->highEnd->getDescription();
+        }
     }
 
     public function getHandDescription()
@@ -364,8 +387,8 @@ class HandStrength extends Deck {
     protected function flipAces()
     {
         foreach ($this->cards as $key => $card) {
-            if ($card->getValue() === 1 || $card->getValue === 14) {
-                $card->setValue($card->getValue === 1 ? 14 : 1);
+            if ($card->getValue() === 1 || $card->getValue() === 14) {
+                $card->setValue($card->getValue() === 1 ? 14 : 1);
 
                 $this->cards->put($key, $card);
             }
