@@ -33,5 +33,59 @@ class HandStrengthTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($handStrength->cardCount(), count($cards));
     }
 
+    public function testHandStrengthStraight()
+    {
+        $handStrength = new HandStrength([
+            new Card('Spade', 2),
+            new Card('Club', 3),
+            new Card('Heart', 9),
+            new Card('Club', 5),
+            new Card('Diamond', 6),
+            new Card('Spade', 7),
+            new Card('Spade', 8),
+        ]);
+        $this->assertEquals($handStrength->getDescription(), 'Straight Nine of Hearts High');
+
+        $handStrength = new HandStrength([
+            new Card('Spade', 10),
+            new Card('Club', 11),
+            new Card('Heart', 12),
+            new Card('Club', 13),
+            new Card('Diamond', 14),
+            new Card('Spade', 7),
+            new Card('Spade', 8),
+        ]);
+        $this->assertEquals($handStrength->getDescription(), 'Straight Ace of Diamonds High');
+    }
+
+
+
+
+    public function testHandStrengthFlush()
+    {
+        $handStrength = new HandStrength([
+            new Card('Spade', 2),
+            new Card('Spade', 10),
+            new Card('Spade', 12),
+            new Card('Spade', 5),
+            new Card('Spade', 9),
+            new Card('Spade', 7),
+            new Card('Spade', 8),
+        ]);
+        $this->assertEquals($handStrength->getDescription(), 'Flush');
+    }
+
+    protected function getArrayOfCards1()
+    {
+        return [
+            new Card('Spade', 2),
+            new Card('Spade', 3),
+            new Card('Spade', 4),
+            new Card('Spade', 5),
+            new Card('Spade', 6),
+            new Card('Spade', 7),
+            new Card('Spade', 8),
+        ];
+    }
 
 }

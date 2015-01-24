@@ -48,8 +48,8 @@ class Card implements Contracts\Card {
             $this->setSuit($suit);
         }
 
-        if ( ! is_null($suit)) {
-            $this->setSuit($suit);
+        if ( ! is_null($value)) {
+            $this->setValue($value);
         }
     }
 
