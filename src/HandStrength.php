@@ -211,11 +211,9 @@ class HandStrength extends Deck {
     protected function findStraight()
     {
         $consecutiveCount = 1;
-        $consecutiveSuitCount = 1;
 
         $isStraight = false;
         $lastValue = -1;
-        $lastSuit = '';
         $high = '';
 
         foreach ($this->cards as $card) {
@@ -227,10 +225,6 @@ class HandStrength extends Deck {
                 // the count
                 $consecutiveCount++;
 
-                if ($card->getSuit() == $lastSuit)
-                {
-                    $consecutiveSuitCount++;
-                }
                 // We've found a straight if we have counted
                 // five consecutive cards
                 if ($consecutiveCount >= 5) {
@@ -241,11 +235,9 @@ class HandStrength extends Deck {
                 // Lost consecutive streak, reset the count
                 $consecutiveCount = 1;
                 $high = clone $card;
-                $consecutiveSuitCount = 1;
             }
 
             $lastValue = $card->getValue();
-            $lastSuit = $card->getSuit();
         }
 
         return $isStraight;
