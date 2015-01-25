@@ -184,15 +184,15 @@ class HandStrength extends Deck {
      * 
      * @return boolean
      */
-    public function isStraight($checkForStraightFlush = false)
+    public function isStraight()
     {
-        $lowStraight = $this->findStraight($checkForStraightFlush);
+        $lowStraight = $this->findStraight();
         
         // Flip aces to high aces to look for high
         // straight
         $this->flipAces();
 
-        $highStraight = $this->findStraight($checkForStraightFlush);
+        $highStraight = $this->findStraight();
 
         // Back to low aces
         $this->flipAces();
@@ -208,7 +208,7 @@ class HandStrength extends Deck {
         });
     }
 
-    protected function findStraight($checkForStraightFlush = false)
+    protected function findStraight()
     {
         $consecutiveCount = 1;
         $consecutiveSuitCount = 1;
