@@ -69,6 +69,11 @@ class Card implements Contracts\Card {
         return $this->value;
     }
 
+    public function getValueWord()
+    {
+        return $this->cardValues[$this->value];
+    }
+
     public function getSuit()
     {
         return $this->suit;
