@@ -14,6 +14,15 @@ namespace Sixteenstudio\Poker;
 class DeckTest extends \PHPUnit_Framework_TestCase {
 
     /**
+     * @uses \Sixteenstudio\Poker\Contacts\Deck
+     */
+    public function testDeckSatisfiesItsContract {
+        $deck = new Deck();
+
+        $this->assertInstanceOf('Sixteenstudio\Poker\Contracts\Deck', $deck);
+    }
+
+    /**
      * @uses              \Sixteenstudio\Poker\Card
      * @covers            \Sixteenstudio\Poker\Deck::__construct
      * @covers            \Sixteenstudio\Poker\Deck::setCards
