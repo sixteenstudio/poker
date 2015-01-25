@@ -21,6 +21,7 @@ class HandStrength extends Deck {
     /** @var Card */
     protected $kicker;
     protected $highEnd;
+    protected $flushSuit;
 
     protected $hands = [
         'High Card',
@@ -109,7 +110,25 @@ class HandStrength extends Deck {
 
     public function isStraightFlush()
     {
-        return $this->isStraight() && $this->isFlush();
+        if ($this->isFlush())
+        {
+            $flushCards = [];
+            foreach ($this->cards as $card)
+            {
+                if ($card->getSuit() == $this->flushSuit)
+                {
+                    $flushCards[] = clone $card;
+                }
+            }
+            $handStrength = new HandStrength($flushCards);
+            $handStrength->sortCards();
+            if ($handStrength->isStraight())
+            {
+                $this->highEnd = $handStrength->getHighEnd();
+                return true;
+            }
+        }
+        return false;
     }
 
     public function isFourOfAKind()
@@ -150,8 +169,9 @@ class HandStrength extends Deck {
             empty($suitTally[$card->getSuit()]) ? $suitTally[$card->getSuit()] = 1 : $suitTally[$card->getSuit()]++;
         }
 
-        foreach ($suitTally as $tally) {
+        foreach ($suitTally as $suit => $tally) {
             if ($tally >= 5) {
+                $this->flushSuit = $suit;
                 return true;
             }
         }
@@ -180,7 +200,7 @@ class HandStrength extends Deck {
         return $highStraight ?: $lowStraight;
     }
 
-    protected function sortCards()
+    public function sortCards()
     {
         $this->cards->sortByDesc(function($card)
         {
@@ -192,20 +212,24 @@ class HandStrength extends Deck {
     {
         $consecutiveCount = 1;
 
+        $isStraight = false;
         $lastValue = -1;
         $high = '';
 
         foreach ($this->cards as $card) {
-            if ($card->getValue() == $lastValue - 1) {
+            if ($card->getValue() == $lastValue) {
+                // We need to ignore this card
+            }
+            elseif ($card->getValue() == $lastValue - 1) {
                 // Found a consecutive card, add one to
                 // the count
                 $consecutiveCount++;
 
                 // We've found a straight if we have counted
                 // five consecutive cards
-                if ($consecutiveCount === 5) {
-                    $this->highEnd = $high;
-                    return true;
+                if ($consecutiveCount >= 5) {
+                    $isStraight = true;
+                    $this->highEnd = ! isset($this->highEnd) || ($high->getValue() > $this->highEnd->getValue()) ? $high : $this->highEnd;
                 }
             } else {
                 // Lost consecutive streak, reset the count
@@ -216,7 +240,7 @@ class HandStrength extends Deck {
             $lastValue = $card->getValue();
         }
 
-        return false;
+        return $isStraight;
     }
 
     public function isThreeOfAKind()
@@ -359,7 +383,7 @@ class HandStrength extends Deck {
             return ' ' . $this->kicker . ' Kicker';
         }
 
-        if ($high = $this->getHighEnd())
+        if ($high = $this->getHighEndWord())
         {
             return ' ' . $high . ' High';
         }
@@ -367,9 +391,14 @@ class HandStrength extends Deck {
 
     protected function getHighEnd()
     {
+        return $this->highEnd;
+    }
+
+    protected function getHighEndWord()
+    {
         if ($this->highEnd)
         {
-            return $this->highEnd->getDescription();
+            return $this->highEnd->getValueWord();
         }
     }
 
