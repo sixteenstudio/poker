@@ -1,11 +1,20 @@
 <?php namespace Sixteenstudio\Poker;
 
+/*
+ * This file is part of the Poker package.
+ *
+ * (c) Matthew Collison <matthew@sixteenstudio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 class Deck {
 
     /**
      * The collection of cards within this deck
      * 
-     * @var Poker\Table\Collection
+     * @var Sixteenstudio\Poker\Collection
      */
     protected $cards;
 
@@ -48,7 +57,7 @@ class Deck {
     /**
      * Takes a card off the top of the deck
      * 
-     * @return Poker\Table\Contracts\Card
+     * @return Sixteenstudio\Poker\Contracts\Card
      */
     public function takeCard()
     {
@@ -58,6 +67,7 @@ class Deck {
     /**
      * Places a card at the top of the deck
      *
+     * @param  Sixteenstudio\Poker\Contracts\Card $card
      * @return void
      */
     public function addCard(Contracts\Card $card)
@@ -79,7 +89,7 @@ class Deck {
     /**
      * Retrieves the collection of cards in this deck
      * 
-     * @return Poker\Table\Collection
+     * @return Sixteenstudio\Poker\Collection
      */
     public function getCards()
     {

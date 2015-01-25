@@ -1,13 +1,13 @@
 <?php namespace Sixteenstudio\Poker;
 
-/****
- * NOTE TO SELF:
- ****/
-// I keep thinking that I need to somehow check all possibilities of 5 card
-// hands to actually make a handstrength, but I should be able to check for
-// pairs, trips, full houses, flushes etc within all 7 cards. This should not
-// be an issue. A game where probability has to come into play is in omaha,
-// but not hold'em. Basically, save that complicated stuff for Omaha!
+/*
+ * This file is part of the Poker package.
+ *
+ * (c) Matthew Collison <matthew@sixteenstudio.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 class HandStrength extends Deck {
 
