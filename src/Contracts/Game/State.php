@@ -1,4 +1,4 @@
-<?php namespace Sixteenstudio\Poker;
+<?php namespace Sixteenstudio\Poker\Contracts\Game;
 
 /*
  * This file is part of the Poker package.
@@ -9,13 +9,4 @@
  * file that was distributed with this source code.
  */
 
-abstract class Game {
-
-    /**
-     * The name of the game
-     * 
-     * @var string
-     */
-    abstract public $name;
-
-}
+interface State {}
