@@ -9,4 +9,13 @@
  * file that was distributed with this source code.
  */
 
-interface State {}
+interface State {
+
+	/**
+	 * Return the name of this game state
+	 * 
+	 * @return string
+	 */
+	public function getName();
+
+}
