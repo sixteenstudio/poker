@@ -19,7 +19,7 @@ interface Game {
     public function getName();
 
     /**
-     * Begin the game
+     * Get the current state of the game
      * 
      * @var Sixteenstudio\Poker\Contracts\Game\State
      */
